@@ -1,0 +1,33 @@
+:root{--bg:#f3f1ec;--ink:#17252f;--mut:#5b6b75;--line:#d6d3ca;--card:#fffefb;--acc:#0e6b6b;--acc2:#c8501e;--code:#10202a}
+@media(prefers-color-scheme:dark){:root{--bg:#0f1a21;--ink:#e8ecee;--mut:#9aabb5;--line:#2a3b46;--card:#16252e;--acc:#5fc4bf;--acc2:#f08a5d;--code:#08121a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Bricolage Grotesque",system-ui,sans-serif}
+a{color:var(--acc)}
+:focus-visible{outline:3px solid var(--acc2);outline-offset:2px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header.site{padding:48px 0 24px}
+h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.1;margin:0 0 12px;letter-spacing:-.02em}
+.lead{color:var(--mut);max-width:60ch;margin:0}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0}
+.filters button{font:inherit;border:1.5px solid var(--line);background:transparent;color:var(--ink);padding:6px 14px;border-radius:999px;cursor:pointer}
+.filters button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px;padding-bottom:60px}
+.card{display:flex;flex-direction:column;background:var(--card);border:1.5px solid var(--line);border-left:6px solid var(--acc);border-radius:6px;padding:18px;text-decoration:none;color:inherit;transition:transform .15s,border-color .15s}
+.card:hover{transform:translateY(-3px);border-color:var(--acc2)}
+.card h2{font-size:1.2rem;margin:6px 0}
+.card p{margin:0 0 12px;color:var(--mut);font-size:.95rem}
+.tool{font-weight:700;color:var(--acc)}
+.tags{margin-top:auto;font-size:.85rem;color:var(--mut)}
+.back{display:inline-block;margin:28px 0 8px}
+.meta{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0 8px}
+.btn{display:inline-block;padding:9px 18px;border-radius:6px;background:var(--acc);color:var(--bg);text-decoration:none;font-weight:600}
+.btn.alt{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+section.part{margin:36px 0}
+section.part h2{border-bottom:1.5px solid var(--line);padding-bottom:6px}
+pre{background:var(--code);color:#dbe7ec;padding:14px 16px;border-radius:6px;overflow-x:auto;font-size:.88rem;line-height:1.5}
+.step h3{margin:22px 0 4px;font-size:1.05rem}
+.shots{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.shots img{width:100%;border:1.5px solid var(--line);border-radius:6px;background:var(--card);min-height:120px}
+.shots figcaption{font-size:.85rem;color:var(--mut)}
+footer{border-top:1.5px solid var(--line);padding:24px 0;color:var(--mut);font-size:.9rem}
+@media(prefers-reduced-motion:reduce){.card{transition:none}}

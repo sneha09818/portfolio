@@ -1,0 +1,30 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Project</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"></head><body>
+<div class="wrap"><a class="back" href="index.html">Back to all projects</a><main id="main"></main>
+<footer>Built with HTML, CSS and JavaScript, hosted on GitHub Pages.</footer></div>
+<script src="projects.js"></script>
+<script>
+const id=new URLSearchParams(location.search).get('id');
+const p=PROJECTS.find(x=>x.id===id),m=document.getElementById('main');
+function el(tag,txt,cls){const e=document.createElement(tag);if(txt)e.textContent=txt;if(cls)e.className=cls;return e}
+function part(title){const s=el('section','', 'part');s.appendChild(el('h2',title));m.appendChild(s);return s}
+if(!p){m.appendChild(el('h1','Project not found'));m.appendChild(el('p','Go back to the project list and pick one.'))}
+else{
+ document.title=p.title;
+ m.appendChild(el('span',p.tool,'tool'));m.appendChild(el('h1',p.title));m.appendChild(el('p',p.summary,'lead'));
+ const meta=el('div','','meta');
+ const r=el('a','GitHub repository','btn');r.href=p.repo;meta.appendChild(r);
+ if(p.demo){const d=el('a','Live demo','btn alt');d.href=p.demo;meta.appendChild(d)}
+ m.appendChild(meta);
+ let s=part('Overview');s.appendChild(el('p',p.overview));s.appendChild(el('p','Tools: '+p.stack.join(', ')));
+ s=part('Architecture');s.appendChild(el('pre',p.diagram));
+ s=part('Setup steps and commands');
+ p.steps.forEach(x=>{const d=el('div','','step');d.appendChild(el('h3',x.t));d.appendChild(el('pre',x.c));s.appendChild(d)});
+ s=part('Troubleshooting');const ul=el('ul');p.troubleshooting.forEach(t=>ul.appendChild(el('li',t)));s.appendChild(ul);
+ s=part('Screenshots');const g=el('div','','shots');
+ p.shots.forEach(x=>{const f=el('figure');f.style.margin=0;const i=el('img');i.src=x.src;i.alt=x.cap;f.appendChild(i);f.appendChild(el('figcaption',x.cap));g.appendChild(f)});
+ s.appendChild(g);
+}
+</script></body></html>
