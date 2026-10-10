@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My DevOps Projects</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <!-- HOME VIEW -->
+  <section id="home">
+    <div class="intro">
+      <h1>My DevOps Projects</h1>
+      <p>Pick a tool to see the projects I built with it and open the code.</p>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <!-- DETAIL VIEW -->
+  <section id="detail" hidden>
+    <button class="back" id="back">Back to all projects</button>
+    <div class="detail-head" id="detailHead"></div>
+    <div class="sections" id="sections"></div>
+  </section>
+</main>
+
+<script>
+/* ============================================================
+   EDIT THIS PART: add your project names, short descriptions
+   and repo links. Each tool has 4 sections. Under each section,
+   put one or more links in the "repos" list:
+     { label: "Repo name", url: "https://github.com/you/repo" }
+   Leave "repos" empty ( [] ) until you have a link.
+   ============================================================ */
+const DATA = {
+  aws: {
+    title: "AWS", cls: "aws", tagline: "Cloud infrastructure projects",
+    sections: [
+      { name: "Project 1", desc: "Short description of this project.", repos: [ { label: "GitHub repo", url: "" } ] },
+      { name: "Project 2", desc: "Short description of this project.", repos: [] },
+      { name: "Project 3", desc: "Short description of this project.", repos: [] },
+      { name: "Project 4", desc: "Short description of this project.", repos: [] }
+    ]
+  },
+  docker: {
+    title: "Docker", cls: "docker", tagline: "Containerisation projects",
+    sections: [
+      { name: "Project 1", desc: "Short description of this project.", repos: [] },
+      { name: "Project 2", desc: "Short description of this project.", repos: [] },
+      { name: "Project 3", desc: "Short description of this project.", repos: [] },
+      { name: "Project 4", desc: "Short description of this project.", repos: [] }
+    ]
+  },
+  kubernetes: {
+    title: "Kubernetes", cls: "k8s", tagline: "Orchestration projects",
+    sections: [
+      { name: "Project 1", desc: "Short description of this project.", repos: [] },
+      { name: "Project 2", desc: "Short description of this project.", repos: [] },
+      { name: "Project 3", desc: "Short description of this project.", repos: [] },
+      { name: "Project 4", desc: "Short description of this project.", repos: [] }
+    ]
+  },
+  jenkins: {
+    title: "Jenkins", cls: "jenkins", tagline: "CI/CD pipeline projects",
+    sections: [
+      { name: "Project 1", desc: "Short description of this project.", repos: [] },
+      { name: "Project 2", desc: "Short description of this project.", repos: [] },
+      { name: "Project 3", desc: "Short description of this project.", repos: [] },
+      { name: "Project 4", desc: "Short description of this project.", repos: [] }
+    ]
+  }
+};
+/* ================= END OF EDIT AREA ================= */
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+// Build the 4 home blocks
+$('grid').innerHTML = Object.entries(DATA).map(([key, d]) =>
+  `<button class="block ${d.cls}" data-key="${key}">
+     <h2>${esc(d.title)}</h2>
+     <span>${esc(d.tagline)}: 4 projects</span>
+   </button>`).join('');
+
+$('grid').addEventListener('click', e => {
+  const b = e.target.closest('.block');
+  if (b) location.hash = b.dataset.key;
+});
+$('back').addEventListener('click', () => { location.hash = ''; });
+
+function show() {
+  const key = location.hash.slice(1);
+  const d = DATA[key];
+  $('home').hidden = !!d;
+  $('detail').hidden = !d;
+  if (!d) { window.scrollTo(0, 0); return; }
+
+  const colors = { aws: '#e88a00', docker: '#0a8fc2', k8s: '#3a4fd0', jenkins: '#c8322d' };
+  $('detail').style.setProperty('--c', colors[d.cls]);
+  $('detailHead').innerHTML = `<h1>${esc(d.title)}</h1><p>${esc(d.tagline)}</p>`;
+  $('sections').innerHTML = d.sections.map(s => {
+    const links = s.repos.filter(r => r.url).map(r =>
+      `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)}</a></li>`).join('');
+    return `<article class="section">
+      <h3>${esc(s.name)}</h3>
+      <p>${esc(s.desc)}</p>
+      <ul>${links || '<li class="empty">Repo links coming soon.</li>'}</ul>
+    </article>`;
+  }).join('');
+  window.scrollTo(0, 0);
+}
+window.addEventListener('hashchange', show);
+show();
+</script>
+</body>
+</html>
